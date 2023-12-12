@@ -24,7 +24,7 @@ export const ExampleQuestions = () => {
       <VuiText size="s">
         <p>
           <VuiTextColor color="accent">
-            Describe your interest above or try one of these topics.
+            Here are some questions to get us started...
           </VuiTextColor>
         </p>
       </VuiText>
