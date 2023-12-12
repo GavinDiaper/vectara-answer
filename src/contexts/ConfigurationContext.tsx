@@ -58,6 +58,7 @@ interface Config {
   // Analytics
   config_google_analytics_tracking_code?: string;
   config_full_story_org_id?: string;
+  config_gtm_container_id?: string;
 
   // Summary
   config_summary_default_language?: string;
@@ -148,6 +149,7 @@ type Auth = { isEnabled: boolean; googleClientId?: string };
 type Analytics = {
   googleAnalyticsTrackingCode?: string;
   fullStoryOrgId?: string;
+  gtmContainerId?: string;
 };
 type Rerank = {
   isEnabled: boolean;
@@ -209,7 +211,14 @@ const fetchConfig = async () => {
   return result;
 };
 
-const isTrue = (value: string | undefined) => value === "True";
+const isTrue = (value: string | undefined) => {
+  if (typeof value !== "string") {
+    return false;
+  }
+
+  const normalizedValue = value.trim().toLowerCase();
+  return normalizedValue === "true";
+};
 
 // Prefix config vars to avoid collision with other variables.
 const prefixConfig = (
@@ -367,6 +376,7 @@ export const ConfigContextProvider = ({ children }: Props) => {
         // Analytics
         config_google_analytics_tracking_code,
         config_full_story_org_id,
+        config_gtm_container_id,
 
         // rerank
         config_rerank,
@@ -481,6 +491,7 @@ export const ConfigContextProvider = ({ children }: Props) => {
       setAnalytics({
         googleAnalyticsTrackingCode: config_google_analytics_tracking_code,
         fullStoryOrgId: config_full_story_org_id,
+        gtmContainerId: config_gtm_container_id,
       });
 
       setRerank({
